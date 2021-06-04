@@ -1,0 +1,109 @@
+{
+	"name": "bmm-vscode",
+	"displayName": "Baseapp Module Manager",
+	"description": "TODO",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.52.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "bmm.createLocalizedVersion",
+				"title": "BMM: Create a localized version of the current file."
+			},
+			{
+				"command": "bmm.transferToBaseApp",
+				"title": "BMM: Transfer the module to Base App."
+			}
+		],
+		"configuration": [
+			{
+				"title": "BMM configuration",
+				"properties": {
+					"bmm.moduleName": {
+						"type": "string",
+						"default": "",
+						"description": "Name of the module.",
+						"scope": "resource"
+					},
+					"bmm.countryCode": {
+						"type": "string",
+						"default": "W1",
+						"description": "Current country code to use.",
+						"scope": "resource",
+						"enum": [
+							"APAC",
+							"AT",
+							"AU",
+							"BE",
+							"CA",
+							"CH",
+							"CZ",
+							"DACH",
+							"DE",
+							"DK",
+							"ES",
+							"FI",
+							"FR",
+							"GB",
+							"IN",
+							"IS",
+							"IT",
+							"MX",
+							"NA",
+							"NL",
+							"NO",
+							"NZ",
+							"RU",
+							"SE",
+							"US",
+							"W1"
+						]
+					},
+					"bmm.navRoot": {
+						"type": "string",
+						"default": "",
+						"description": "Root directory of the NAV repository.",
+						"scope": "resource"
+					}
+				}
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"lint": "eslint src --ext ts",
+		"test": "node ./out/test/runTest.js",
+		"copy-files": "node ./copy-files.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.3",
+		"@types/n-readlines": "^1.0.1",
+		"@types/mocha": "^8.0.4",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.52.0",
+		"@typescript-eslint/eslint-plugin": "^4.14.1",
+		"@typescript-eslint/parser": "^4.14.1",
+		"eslint": "^7.19.0",
+		"mocha": "^8.2.1",
+		"typescript": "^4.1.3",
+		"vscode-test": "^1.5.0"
+	},
+	"dependencies": {
+		"glob": "^7.1.6",
+		"n-readlines": "^1.0.1",
+		"vscode-oniguruma": "^1.4.0",
+		"vscode-textmate": "^5.2.0"
+	}
+}
