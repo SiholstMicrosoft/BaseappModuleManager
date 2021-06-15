@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BmmCore": {
+      "commandName": "Project",
+      "commandLineArgs": "init C:\\Users\\siholst\\Documents\\AL\\ALProject1 -c W1"
+    }
+  }
+}

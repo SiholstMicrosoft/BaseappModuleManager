@@ -7,7 +7,7 @@ using System.IO;
 namespace SynchronizerTests
 {
     [TestClass]
-    public class BmmProcessorV1Tests
+    public class BmmExtProcessorTests
     {
         [TestMethod]
         [DeploymentItem(@"TestFiles/ExtractTableExtension.al", "TestFiles")]
@@ -15,8 +15,8 @@ namespace SynchronizerTests
         {
             // Arrange.
             var content = File.ReadAllText(@"TestFiles/ExtractTableExtension.al");
-            var request = new StringProcessingRequest(content, SyntaxKind.TableExtensionObject, "Prefix");
-            var processor = new BmmProcessorV1();
+            var request = new StringExtProcessingRequest(content, SyntaxKind.TableExtensionObject, "Prefix");
+            var processor = new BmmExtProcessor();
 
             // Act.
             var result = processor.Process(request);
@@ -24,8 +24,8 @@ namespace SynchronizerTests
             // Assert.
             Assert.IsInstanceOfType(
                 result,
-                typeof(StringProcessingResponse),
-                $"Expected parse result to be of type {nameof(StringProcessingResponse)}"
+                typeof(StringExtProcessingResponse),
+                $"Expected parse result to be of type {nameof(StringExtProcessingResponse)}"
             );
             Assert.AreEqual(result.ExtensionFields.Count, 2, "Expected 2 extension fields.");
             Assert.AreEqual(result.GlobalVariables.Count, 2, "Expected 2 global variables.");
@@ -75,26 +75,26 @@ namespace SynchronizerTests
 
             expectedResult =
 @"
-    procedure PrefixTest1()
+    procedure Test1()
     begin
     end;
 ";
             Assert.AreEqual(
                 expectedResult,
                 result.Procedures[0].ToFullString(),
-                "Expected procedure 1 to be extracted with prefix."
+                "Expected public procedure 1 to be extracted with prefix."
             );
 
             expectedResult =
 @"
-    procedure PrefixTest2()
+    local procedure PrefixTest2()
     begin
     end;
 ";
             Assert.AreEqual(
                 expectedResult,
                 result.Procedures[1].ToFullString(),
-                "Expected procedure 2 to be extracted with prefix."
+                "Expected local procedure 2 to be extracted with prefix."
             );
         }
     }

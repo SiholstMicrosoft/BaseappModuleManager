@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Synchronizer.Parsers
 {
-    public class BmmParserV1 : IBmmParser
+    public class BmmParser : IBmmParser
     {
         public ParseResult Parse(ParseRequest request)
         {

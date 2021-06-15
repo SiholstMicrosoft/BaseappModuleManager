@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace Synchronizer.Models.Processing
 {
-    public class StringProcessingResponse : ProcessingResponse
+    public class StringExtProcessingResponse : ExtProcessingResponse
     {
-        public new StringProcessingRequest Request { get; }
+        public new StringExtProcessingRequest Request { get; }
 
-        public StringProcessingResponse(
-            StringProcessingRequest request,
+        public StringExtProcessingResponse(
+            StringExtProcessingRequest request,
             IList<SyntaxNode> extensionFields,
             IList<SyntaxNode> globalVariables,
             IList<SyntaxNode> procedures

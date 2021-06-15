@@ -2,12 +2,12 @@
 
 namespace Synchronizer.Models.Processing
 {
-    public abstract class ProcessingRequest
+    public abstract class ExtProcessingRequest
     {
         public SyntaxKind RootKind { get; }
         public string Prefix { get; }
 
-        protected ProcessingRequest(SyntaxKind rootKind, string prefix)
+        protected ExtProcessingRequest(SyntaxKind rootKind, string prefix)
         {
             RootKind = rootKind;
             Prefix = prefix;

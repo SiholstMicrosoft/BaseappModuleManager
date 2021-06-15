@@ -1,8 +1,8 @@
-# Synchronizer
-Synchronizer/.vs/
-Synchronizer/out/
-Synchronizer/TestResults/
-Synchronizer/**/obj/
+# BmmCore
+BmmCore/.vs/
+BmmCore/out/
+BmmCore/TestResults/
+BmmCore/**/obj/
 
 # bmm-vscode
 bmm-vscode/node_modules/

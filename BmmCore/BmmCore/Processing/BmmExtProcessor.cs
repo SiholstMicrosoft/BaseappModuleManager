@@ -8,20 +8,46 @@ using System.Linq;
 
 namespace Synchronizer.Processing
 {
-    public class BmmProcessorV1 : IBmmProcessor
+    public class BmmExtProcessor : IBmmExtProcessor
     {
-        public ProcessingResponse Process(ProcessingRequest request)
+        private static readonly HashSet<SyntaxKind> _extensionObjectKinds = new HashSet<SyntaxKind>
         {
-            var content = GetContent(request);
-            var tree = SyntaxFactory.ParseSyntaxTree(content.Original);
-            var root = tree.GetCompilationUnitRoot();
+            SyntaxKind.TableExtensionObject,
+            SyntaxKind.PageExtensionObject,
+            SyntaxKind.ReportExtensionObject,
+        };
+        private static readonly HashSet<SyntaxKind> _supportedExtensionObjectKinds = new HashSet<SyntaxKind>
+        {
+            SyntaxKind.TableExtensionObject
+        };
 
+        private enum ProcedureType
+        {
+            Local,
+            Public
+        }
+
+        public bool IsExtensionObject(ExtProcessingRequest request)
+        {
+            var nodes = GetApplicationObjectNodes(request);
+            return nodes.Any(x => _extensionObjectKinds.Contains(x.Kind));
+        }
+
+        public bool IsExtensionObjectSupported(ExtProcessingRequest request)
+        {
+            var nodes = GetApplicationObjectNodes(request);
+            return nodes.Any(x => _supportedExtensionObjectKinds.Contains(x.Kind));
+        }
+
+        public ExtProcessingResponse Process(ExtProcessingRequest request)
+        {
+            var root = GetCompilationUnitNode(request);
             var extensionFields = GetExtensionFields(root);
             var globalVariables = GetGlobalVariables(root);
             var procedures = GetProcedures(root);
 
-            return new StringProcessingResponse(
-                request as StringProcessingRequest,
+            return new StringExtProcessingResponse(
+                request as StringExtProcessingRequest,
                 extensionFields,
                 PrefixContent(request.Prefix, globalVariables, globalVariables, procedures),
                 PrefixContent(request.Prefix, procedures, globalVariables, procedures)
@@ -70,15 +96,6 @@ namespace Synchronizer.Processing
             return procedures;
         }
 
-        private static StringContentManager GetContent(ProcessingRequest request)
-        {
-            if (request is StringProcessingRequest strRequest)
-            {
-                return new StringContentManager(strRequest.Content);
-            }
-            throw new ArgumentException($"Unsupported extension processing request type: ${request.GetType().Name}");
-        }
-
         private static IList<SyntaxNode> PrefixContent(
             string prefix,
             List<SyntaxNode> nodes,
@@ -87,7 +104,8 @@ namespace Synchronizer.Processing
             )
         {
             var globalVariableNames = GetVariableNames(globalVariables);
-            var procedureNames = GetProcedureNames(procedures);
+            var localProcedureNames = GetProcedureNames(procedures, ProcedureType.Local);
+            var publicProcedureNames = GetProcedureNames(procedures, ProcedureType.Public);
             var list = new List<SyntaxNode>();
 
             foreach(var node in nodes)
@@ -101,11 +119,14 @@ namespace Synchronizer.Processing
                 {
                     switch(identifierNode.Parent.Kind)
                     {
+                        // Method type identifier reference.
                         case SyntaxKind.MethodDeclaration:
                         case SyntaxKind.InvocationExpression:
                             {
                                 var name = identifierNode.GetIdentifierOrLiteralValue();
-                                if (procedureNames.Contains(name))
+
+                                // Only prefix local procedures as they are hidden from external code.
+                                if (localProcedureNames.Contains(name))
                                 {
                                     var pos = identifierNode.Span.Start - node.FullSpan.Start;
                                     content.InsertText(pos, prefix);
@@ -113,6 +134,7 @@ namespace Synchronizer.Processing
                             }
                             break;
 
+                        // Otherwise, it is a normal identifier (variable) reference.
                         default:
                             {
                                 var name = identifierNode.GetIdentifierOrLiteralValue();
@@ -166,7 +188,7 @@ namespace Synchronizer.Processing
             return names;
         }
 
-        private static HashSet<string> GetProcedureNames(IList<SyntaxNode> nodes)
+        private static HashSet<string> GetProcedureNames(IList<SyntaxNode> nodes, ProcedureType type)
         {
             var names = new HashSet<string>();
 
@@ -177,13 +199,52 @@ namespace Synchronizer.Processing
 
                 foreach(var methodDeclaration in methodDeclarations)
                 {
-                    var identifier = methodDeclaration
-                        .DescendantNodes(node => node.Kind == SyntaxKind.MethodDeclaration)
-                        .First(x => x.Kind == SyntaxKind.IdentifierName);
+                    var decendantNodes = methodDeclaration.DescendantNodes(x => x.Kind == SyntaxKind.MethodDeclaration);
+                    var tokens = methodDeclaration.DescendantTokens(x => x.Kind == SyntaxKind.MethodDeclaration);
+
+                    switch (type)
+                    {
+                        case ProcedureType.Local:
+                            if (tokens.All(x => x.Kind != SyntaxKind.LocalKeyword))
+                            {
+                                continue;
+                            }
+                            break;
+                        case ProcedureType.Public:
+                            if (tokens.Any(x => x.Kind == SyntaxKind.LocalKeyword))
+                            {                             
+                                continue;
+                            }
+                            break;
+                    }
+                    var identifier = decendantNodes.First(x => x.Kind == SyntaxKind.IdentifierName);
                     names.Add(identifier.GetIdentifierOrLiteralValue());
                 }
             }
             return names;
+        }
+
+        private static StringContentManager GetContent(ExtProcessingRequest request)
+        {
+            if (request is StringExtProcessingRequest strRequest)
+            {
+                return new StringContentManager(strRequest.Content);
+            }
+            throw new ArgumentException($"Unsupported extension processing request type: ${request.GetType().Name}");
+        }
+
+        private static SyntaxNode GetCompilationUnitNode(ExtProcessingRequest request)
+        {
+            var content = GetContent(request);
+            var tree = SyntaxFactory.ParseSyntaxTree(content.Original);
+            return tree.GetCompilationUnitRoot();
+        }
+
+        private static List<SyntaxNode> GetApplicationObjectNodes(ExtProcessingRequest request)
+        {
+            var root = GetCompilationUnitNode(request);
+            return root.DescendantNodes(node => 
+                node.Kind == SyntaxKind.CompilationUnit || node.Kind.IsApplicationObject()).ToList();
         }
     }
 }

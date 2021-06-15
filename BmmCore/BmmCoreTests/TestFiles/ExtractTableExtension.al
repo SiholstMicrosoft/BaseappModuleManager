@@ -20,7 +20,7 @@ tableextension 50100 "Item Ext Test" extends Item
     begin
     end;
 
-    procedure Test2()
+    local procedure Test2()
     begin
     end;
 }

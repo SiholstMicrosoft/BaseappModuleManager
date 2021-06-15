@@ -5,12 +5,9 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Dynamics.Nav.CodeAnalysis", "..\..\Platform-ModernDev\source\Prod\Microsoft.Dynamics.Nav.CodeAnalysis\Microsoft.Dynamics.Nav.CodeAnalysis.csproj", "{77CC00C9-D5B4-4E8A-A0A7-4EE177F61860}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synchronizer", "Synchronizer\Synchronizer.csproj", "{3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BmmCore", "BmmCore\BmmCore.csproj", "{B1890420-6F9F-447D-96D2-DE85A94A83ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SynchronizerTests", "SynchronizerTests\SynchronizerTests.csproj", "{E23E72A3-ADB0-4160-AD25-CF287406CE14}"
-	ProjectSection(ProjectDependencies) = postProject
-		{3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C} = {3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C}
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BmmCoreTests", "BmmCoreTests\BmmCoreTests.csproj", "{A4FFF637-59C2-4D25-A393-91B092830190}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,14 +19,14 @@ Global
 		{77CC00C9-D5B4-4E8A-A0A7-4EE177F61860}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77CC00C9-D5B4-4E8A-A0A7-4EE177F61860}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77CC00C9-D5B4-4E8A-A0A7-4EE177F61860}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A732D9D-5A1B-4C16-AC83-8CBAA6937D0C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E23E72A3-ADB0-4160-AD25-CF287406CE14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E23E72A3-ADB0-4160-AD25-CF287406CE14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E23E72A3-ADB0-4160-AD25-CF287406CE14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E23E72A3-ADB0-4160-AD25-CF287406CE14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1890420-6F9F-447D-96D2-DE85A94A83ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1890420-6F9F-447D-96D2-DE85A94A83ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1890420-6F9F-447D-96D2-DE85A94A83ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1890420-6F9F-447D-96D2-DE85A94A83ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4FFF637-59C2-4D25-A393-91B092830190}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4FFF637-59C2-4D25-A393-91B092830190}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4FFF637-59C2-4D25-A393-91B092830190}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4FFF637-59C2-4D25-A393-91B092830190}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

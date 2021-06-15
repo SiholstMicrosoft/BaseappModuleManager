@@ -7,7 +7,7 @@ using System.IO;
 namespace SynchronizerTests
 {
     [TestClass]
-    public class BmmParserV1Tests
+    public class BmmParserTests
     {
         [TestMethod]
         [DeploymentItem(@"TestFiles/NoALCodeLeft.al", "TestFiles")]
@@ -16,7 +16,7 @@ namespace SynchronizerTests
             // Arrange.
             var content = File.ReadAllText(@"TestFiles/NoALCodeLeft.al");
             var request = new StringParseRequest(content, false);
-            var parser = new BmmParserV1();
+            var parser = new BmmParser();
 
             // Act.
             var result = parser.Parse(request);
@@ -41,7 +41,7 @@ namespace SynchronizerTests
             // Arrange.
             var content = File.ReadAllText(@"TestFiles/NoALCodeLeft.al");
             var request = new StringParseRequest(content, true);
-            var parser = new BmmParserV1();
+            var parser = new BmmParser();
 
             // Act.
             var result = parser.Parse(request);
@@ -70,7 +70,7 @@ namespace SynchronizerTests
             // Arrange.
             var content = File.ReadAllText(@"TestFiles/RemoveProcedure.al");
             var request = new StringParseRequest(content, false);
-            var parser = new BmmParserV1();
+            var parser = new BmmParser();
 
             // Act.
             var result = parser.Parse(request);
@@ -113,7 +113,7 @@ namespace SynchronizerTests
             // Arrange.
             var content = File.ReadAllText(@"TestFiles/RemoveProcedure.al");
             var request = new StringParseRequest(content, true);
-            var parser = new BmmParserV1();
+            var parser = new BmmParser();
 
             // Act.
             var result = parser.Parse(request);
