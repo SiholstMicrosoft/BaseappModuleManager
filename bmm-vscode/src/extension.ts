@@ -1,13 +1,21 @@
 import * as vscode from 'vscode';
-import { registerBaseAppSync } from './services/base-app-sync';
-import { registerCompletionService } from './services/completion';
-import { registerFileSyncService, registerFileRenamingService } from './services/file-sync';
+import { BmmCore } from './services/bmm-core';
+import { WorkspaceSyncService } from './services/workspace-sync-service';
+import { Service } from './services/interfaces/service.interface';
+import { CompletionService } from './services/completion-service';
+import { LocalizationService } from './services/localization-service';
+
+const services: Service[] = [
+  new CompletionService(),
+  new LocalizationService(),
+  new WorkspaceSyncService()
+];
 
 export function activate(context: vscode.ExtensionContext) {
-  registerCompletionService(context);
-  registerFileRenamingService(context);
-  registerFileSyncService(context);
-  registerBaseAppSync(context);
+  BmmCore.init(context);
+  services.forEach(x => x.init(context));
 }
 
-export function deactivate() {}
+export function deactivate() {
+  
+}

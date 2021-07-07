@@ -1,15 +1,17 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "es6",
+		"target": "ES2019",
 		"outDir": "out",
 		"lib": [
-			"es6"
+			"ES2019"
 		],
 		"sourceMap": true,
 		"rootDir": "src",
 		"strict": true,
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"moduleResolution": "Node",
+		"noImplicitAny": false
 		/* Additional Checks */
 		// "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */
 		// "noFallthroughCasesInSwitch": true, /* Report errors for fallthrough cases in switch statement. */

@@ -131,16 +131,11 @@ namespace Synchronizer
             public Task StartAsync(CancellationToken cancellationToken)
             {
                 var task = Parser.Default
-                    .ParseArguments<InitializeOptions, TransferOptions>(_args)
+                    .ParseArguments<InitializeOptions, SyncFilesOptions, CreateLocalizedVersionOptions>(_args)
                     .MapResult(
-                        (InitializeOptions opts) =>
-                        {
-                            return _workspace.Initialize(opts);
-                        },
-                        (TransferOptions opts) =>
-                        {
-                            throw new System.NotImplementedException();
-                        },
+                        (InitializeOptions opts) => _workspace.Initialize(opts),
+                        (SyncFilesOptions opts) => _workspace.SyncFiles(opts),
+                        (CreateLocalizedVersionOptions opts) => _workspace.CreateLocalizedVersion(opts),
                         errors => Task.FromResult(1)
                     );
 
