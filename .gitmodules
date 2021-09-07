@@ -1,0 +1,3 @@
+[submodule "Platform-ModernDev"]
+	path = Platform-ModernDev
+	url = https://dynamicssmb2.visualstudio.com/Dynamics%20SMB/_git/Platform-ModernDev
