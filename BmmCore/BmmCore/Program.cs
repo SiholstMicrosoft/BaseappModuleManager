@@ -132,6 +132,7 @@ namespace Synchronizer
             {
                 var task = Parser.Default
                     .ParseArguments<InitializeOptions, SyncFilesOptions, CreateLocalizedVersionOptions>(_args)
+                    .WithParsed((IOptions option) => option.Validate())
                     .MapResult(
                         (InitializeOptions opts) => _workspace.Initialize(opts),
                         (SyncFilesOptions opts) => _workspace.SyncFiles(opts),

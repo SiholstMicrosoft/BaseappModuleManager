@@ -9,3 +9,4 @@ bmm-vscode/node_modules/
 bmm-vscode/.snapshots/
 bmm-vscode/build/
 bmm-vscode/out/
+.vscode/settings.json

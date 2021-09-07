@@ -3,7 +3,6 @@ using BmmCore.Models.Options;
 using BmmCore.Models.Workspace;
 using BmmCore.Utilities;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,21 +55,17 @@ namespace BmmCore.Workspace
 
         public Task SyncFiles(SyncFilesOptions options)
         {
-            ValidateOptions(options);
-
             return options.EventType switch
             {
-                FileSyncEvent.Create => OnCreateFiles(options),
-                FileSyncEvent.Delete => OnDeleteFiles(options),
-                FileSyncEvent.Rename => OnRenameFiles(options),
+                FileSyncEvent.Create => EventCreateFiles(options),
+                FileSyncEvent.Delete => EventDeleteFiles(options),
+                FileSyncEvent.Rename => EventRenameFiles(options),
                 _ => throw new ArgumentException($"Unexpected file sync event {options.EventType}"),
             };
         }
 
         public Task CreateLocalizedVersion(CreateLocalizedVersionOptions options)
         {
-            ValidateOptions(options);
-            
             var workspaceFiles = new WorkspaceFiles(options.WorkspaceDirectory);
             var layerPath = workspaceFiles.GetLayerPath(options.Target, options.FilePath, true);
 
@@ -91,7 +86,7 @@ namespace BmmCore.Workspace
             return Task.CompletedTask;
         }
 
-        private static Task OnCreateFiles(SyncFilesOptions options)
+        private static Task EventCreateFiles(SyncFilesOptions options)
         {
             var workspaceFiles = new WorkspaceFiles(options.WorkspaceDirectory);
             foreach(var file in options.FilePaths)
@@ -102,7 +97,7 @@ namespace BmmCore.Workspace
             return Task.CompletedTask;
         }
 
-        private static Task OnDeleteFiles(SyncFilesOptions options)
+        private static Task EventDeleteFiles(SyncFilesOptions options)
         {
             var workspaceFiles = new WorkspaceFiles(options.WorkspaceDirectory);
             foreach (var file in options.FilePaths)
@@ -124,7 +119,7 @@ namespace BmmCore.Workspace
             return Task.CompletedTask;
         }
 
-        private static Task OnRenameFiles(SyncFilesOptions options)
+        private static Task EventRenameFiles(SyncFilesOptions options)
         {
             var workspaceFiles = new WorkspaceFiles(options.WorkspaceDirectory);
             var fromPaths = options.FilePaths.Where((_, index) => index % 2 == 0);
@@ -192,59 +187,6 @@ namespace BmmCore.Workspace
             }
             File.Move(file, layerPath);
             return layerPath;
-        }
-
-        private static void ValidateOptions(SyncFilesOptions options)
-        {
-            var invalidPaths = new List<string>();    
-
-            switch(options.EventType)
-            {
-                case FileSyncEvent.Create:
-                    invalidPaths = options.FilePaths.Where(x => !File.Exists(x)).ToList();
-                    break;
-                case FileSyncEvent.Rename:
-                    if(options.FilePaths.Count % 2 != 0)
-                    {
-                        throw new ArgumentException("Rename event requires from/to file path pairs");
-                    }
-                    for(var i = 1; i < options.FilePaths.Count; i += 2)
-                    {
-                        if(!File.Exists(options.FilePaths[i]))
-                        {
-                            invalidPaths.Add(options.FilePaths[i]);
-                        }
-                    }
-                    break;
-            }
-
-            if (invalidPaths.Count > 0)
-            {
-                throw new ArgumentException(
-                    $"Invalid file paths provided:{Environment.NewLine}" +
-                    $"{string.Join(Environment.NewLine, invalidPaths)}"
-                );
-            }
-        }
-
-        private static void ValidateOptions(CreateLocalizedVersionOptions options)
-        {
-            var workspaceFiles = new WorkspaceFiles(options.WorkspaceDirectory);
-            if (!workspaceFiles.IsActivePath(options.FilePath))
-            {
-                throw new ArgumentException($"File path {options.FilePath} is not an active file path");
-            }
-            if(!File.Exists(options.FilePath))
-            {
-                throw new ArgumentException($"{options.FilePath} is not a valid file path");
-            }
-            var layerPath = workspaceFiles.GetLayerPath(options.Target, options.FilePath, true);
-            if(File.Exists(layerPath))
-            {
-                throw new ArgumentException(
-                    $"There is already a {options.CountryCode} localized version for {options.FilePath}"
-                );
-            }
         }
     }
 }
