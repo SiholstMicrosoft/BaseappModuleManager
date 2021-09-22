@@ -7,3 +7,5 @@ file-sync C:\Users\siholst\Documents\AL\ALProject1 -c APAC -e Delete -f C:\Users
 file-sync C:\Users\siholst\Documents\AL\ALProject1 -c APAC -e Rename -f C:\Users\siholst\Documents\AL\ALProject1\src\CustomerListRename.Page.al C:\Users\siholst\Documents\AL\ALProject1\src\CustomerList.Page.al
 
 new-localized C:\Users\siholst\Documents\AL\ALProject1 -c APAC -t CH -f C:\Users\siholst\Documents\AL\ALProject1\src\CustomerList.Page.al
+
+transfer C:\Users\siholst\Documents\AL\ALProject1 -c APAC -t C:\NAV

@@ -22,13 +22,37 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestFiles\ExtractTableExtension.al">
+    <None Update="TestFiles\ExtractTableExtension\Expected-Field-1.al">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\RemoveProcedure.al">
+    <None Update="TestFiles\ExtractTableExtension\Expected-Field-0.al">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestFiles\NoALCodeLeft.al">
+    <None Update="TestFiles\ExtractTableExtension\Input.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\NoALCodeTestWithComments\Expected-Output.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\NoALCodeTestWithComments\Input.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\NoALCodeTestWithoutComments\Expected-Output.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\RemoveProcedureWithComments\Expected-Output.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\RemoveProcedureWithComments\Input.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\RemoveProcedureWithoutComments\Expected-Output.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\RemoveProcedureWithoutComments\Input.al">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestFiles\NoALCodeTestWithoutComments\Input.al">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

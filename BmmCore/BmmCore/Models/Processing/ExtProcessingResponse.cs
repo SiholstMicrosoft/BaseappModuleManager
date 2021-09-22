@@ -1,20 +1,20 @@
-﻿using Microsoft.Dynamics.Nav.CodeAnalysis;
+﻿using BmmCore.Models.Domain;
 using System.Collections.Generic;
 
-namespace Synchronizer.Models.Processing
+namespace BmmCore.Models.Processing
 {
     public abstract class ExtProcessingResponse
     {
         public ExtProcessingRequest Request { get; }
-        public IList<SyntaxNode> ExtensionFields { get; }
-        public IList<SyntaxNode> GlobalVariables { get; }
-        public IList<SyntaxNode> Procedures { get; }
+        public IList<Field> ExtensionFields { get; }
+        public IList<GlobalVariable> GlobalVariables { get; }
+        public IList<Procedure> Procedures { get; }
 
         protected ExtProcessingResponse(
             ExtProcessingRequest request,
-            IList<SyntaxNode> extensionFields,
-            IList<SyntaxNode> globalVariables,
-            IList<SyntaxNode> procedures)
+            IList<Field> extensionFields,
+            IList<GlobalVariable> globalVariables,
+            IList<Procedure> procedures)
         {
             Request = request;
             ExtensionFields = extensionFields;

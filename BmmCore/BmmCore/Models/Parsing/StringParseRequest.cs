@@ -1,4 +1,4 @@
-﻿namespace Synchronizer.Models
+﻿namespace BmmCore.Models
 {
     public class StringParseRequest : ParseRequest
     {

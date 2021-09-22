@@ -1,10 +1,10 @@
-﻿using BmmTransferer.Models.Processing;
-using System;
+﻿using BmmCore.Models.Options;
+using System.Threading.Tasks;
 
-namespace BmmTransferer.Processing
+namespace BmmCore.Processing
 {
     public interface IBmmTransferer
     {
-        public Progress<int> Transfer(TransferRequest request);
+        public Task Transfer(TransferOptions options);
     }
 }

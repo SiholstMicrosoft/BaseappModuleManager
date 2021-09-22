@@ -1,6 +1,6 @@
-﻿using Synchronizer.Models;
+﻿using BmmCore.Models;
 
-namespace Synchronizer.Parsers
+namespace BmmCore.Parsers
 {
     interface IBmmParser
     {

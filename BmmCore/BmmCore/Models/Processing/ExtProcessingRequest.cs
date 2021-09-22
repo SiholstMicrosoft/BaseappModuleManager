@@ -1,6 +1,6 @@
 ﻿using Microsoft.Dynamics.Nav.CodeAnalysis;
 
-namespace Synchronizer.Models.Processing
+namespace BmmCore.Models.Processing
 {
     public abstract class ExtProcessingRequest
     {

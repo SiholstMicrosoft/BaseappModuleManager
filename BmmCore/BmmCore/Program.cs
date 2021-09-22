@@ -1,4 +1,5 @@
 ﻿using BmmCore.Models.Options;
+using BmmCore.Processing;
 using BmmCore.Workspace;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
@@ -108,35 +109,45 @@ namespace Synchronizer
                         .AddHostedService<Worker>()
                         .AddSingleton(args)
                         .AddSingleton<IWorkspace, Workspace>()
+                        .AddSingleton<IBmmTransferer, BmmTransferer>()
                 );
         }
 
         private class Worker : IHostedService
         {
-            private string[] _args;
-            private IWorkspace _workspace;
-            private IHostApplicationLifetime _hostApplicationLifetime;
+            private readonly string[] _args;
+            private readonly IHostApplicationLifetime _hostApplicationLifetime;
+            private readonly IWorkspace _workspace;
+            private readonly IBmmTransferer _transferer;
 
             public Worker(
                 string[] args,
                 IHostApplicationLifetime hostApplicationLifetime,
-                IWorkspace workspace
+                IWorkspace workspace,
+                IBmmTransferer transferer
             )
             {
                 _args = args;
                 _hostApplicationLifetime = hostApplicationLifetime;
                 _workspace = workspace;
+                _transferer = transferer;
             }
 
             public Task StartAsync(CancellationToken cancellationToken)
             {
                 var task = Parser.Default
-                    .ParseArguments<InitializeOptions, SyncFilesOptions, CreateLocalizedVersionOptions>(_args)
+                    .ParseArguments<
+                        InitializeOptions, 
+                        SyncFilesOptions, 
+                        CreateLocalizedVersionOptions,
+                        TransferOptions
+                     >(_args)
                     .WithParsed((IOptions option) => option.Validate())
                     .MapResult(
                         (InitializeOptions opts) => _workspace.Initialize(opts),
                         (SyncFilesOptions opts) => _workspace.SyncFiles(opts),
                         (CreateLocalizedVersionOptions opts) => _workspace.CreateLocalizedVersion(opts),
+                        (TransferOptions opts) => _transferer.Transfer(opts),
                         errors => Task.FromResult(1)
                     );
 

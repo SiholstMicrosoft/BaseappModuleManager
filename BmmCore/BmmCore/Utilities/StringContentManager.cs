@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SynchronizerTests.Utilities
+namespace BmmCore.Utilities
 {
     internal class StringContentManager
     {
         public string Original { get; }
         public string Current { get; private set; }
 
-        private List<TextSpan> _removedSpans = new List<TextSpan>();
-        private List<TextSpan> _addedSpans = new List<TextSpan>();
+        private readonly List<TextSpan> _removedSpans = new();
+        private readonly List<TextSpan> _addedSpans = new();
 
         public StringContentManager(string content)
         {

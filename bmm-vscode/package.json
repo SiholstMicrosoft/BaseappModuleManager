@@ -3,6 +3,7 @@
 	"displayName": "Baseapp Module Manager",
 	"description": "TODO",
 	"version": "0.0.1",
+	"publisher": "simon-holst-albrechtsen",
 	"engines": {
 		"vscode": "^1.52.0"
 	},

@@ -2,7 +2,7 @@
   "profiles": {
     "BmmCore": {
       "commandName": "Project",
-      "commandLineArgs": "new-localized C:\\Users\\siholst\\Documents\\AL\\ALProject1 -c APAC -t CH -f C:\\Users\\siholst\\Documents\\AL\\ALProject1\\src\\CustomerList.Page.al"
+      "commandLineArgs": "transfer C:\\Users\\siholst\\Documents\\AL\\ALProject1 -c APAC -t C:\\NAV"
     }
   }
 }

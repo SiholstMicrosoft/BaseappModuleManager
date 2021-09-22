@@ -1,7 +1,7 @@
-﻿using Microsoft.Dynamics.Nav.CodeAnalysis;
+﻿using BmmCore.Models.Domain;
 using System.Collections.Generic;
 
-namespace Synchronizer.Models.Processing
+namespace BmmCore.Models.Processing
 {
     public class StringExtProcessingResponse : ExtProcessingResponse
     {
@@ -9,9 +9,9 @@ namespace Synchronizer.Models.Processing
 
         public StringExtProcessingResponse(
             StringExtProcessingRequest request,
-            IList<SyntaxNode> extensionFields,
-            IList<SyntaxNode> globalVariables,
-            IList<SyntaxNode> procedures
+            IList<Field> extensionFields,
+            IList<GlobalVariable> globalVariables,
+            IList<Procedure> procedures
         ) 
             : base(request, extensionFields, globalVariables, procedures)
         {

@@ -1,6 +1,6 @@
-﻿using Synchronizer.Models.Processing;
+﻿using BmmCore.Models.Processing;
 
-namespace Synchronizer.Processing
+namespace BmmCore.Processing
 {
     interface IBmmExtProcessor
     {

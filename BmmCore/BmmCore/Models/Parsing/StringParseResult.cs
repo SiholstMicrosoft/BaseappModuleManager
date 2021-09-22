@@ -1,6 +1,6 @@
 ﻿using Microsoft.Dynamics.Nav.CodeAnalysis;
 
-namespace Synchronizer.Models
+namespace BmmCore.Models
 {
     public class StringParseResult: ParseResult
     {

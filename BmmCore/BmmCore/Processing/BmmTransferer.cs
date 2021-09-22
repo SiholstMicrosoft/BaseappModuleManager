@@ -1,11 +1,12 @@
-﻿using BmmTransferer.Models.Processing;
+﻿using BmmCore.Models.Options;
 using System;
+using System.Threading.Tasks;
 
-namespace BmmTransferer.Processing
+namespace BmmCore.Processing
 {
     public class BmmTransferer : IBmmTransferer
     {
-        public Progress<int> Transfer(TransferRequest request)
+        public async Task Transfer(TransferOptions options)
         {
             throw new NotImplementedException();
         }

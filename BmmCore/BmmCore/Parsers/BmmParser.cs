@@ -1,13 +1,13 @@
 ﻿using Microsoft.Dynamics.Nav.CodeAnalysis;
 using Microsoft.Dynamics.Nav.CodeAnalysis.Syntax;
-using Synchronizer.Definitions;
-using Synchronizer.Models;
-using SynchronizerTests.Utilities;
+using BmmCore.Definitions;
+using BmmCore.Models;
+using BmmCore.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Synchronizer.Parsers
+namespace BmmCore.Parsers
 {
     public class BmmParser : IBmmParser
     {

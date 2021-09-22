@@ -1,4 +1,4 @@
-﻿namespace Synchronizer.Definitions
+﻿namespace BmmCore.Definitions
 {
     static class BmmTags
     {
